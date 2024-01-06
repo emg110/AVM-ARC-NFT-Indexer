@@ -1,0 +1,33 @@
+name = "avm-arc-nft-indexer"
+main = "index.mjs"
+account_id = ""
+workers_dev = true
+node_compat = true
+compatibility_date = "2023-10-11"
+usage_model = "unbound"
+kv_namespaces = [
+    { binding = "arc72-contracts", id = "" },
+    { binding = "arc72-tokens", id = "" },
+    { binding = "arc72-transfers", id = "" },
+]
+[vars]
+MNEMONICS = ""
+MNEMONICS_REKEY = ""
+NETWORK = "mainnet"
+
+[env.testnet]
+workers_dev = true
+node_compat = true
+compatibility_date = "2023-10-11"
+usage_model = "unbound"
+kv_namespaces = [
+      { binding = "arc72-contracts", id = "" },
+    { binding = "arc72-tokens", id = "" },
+    { binding = "arc72-transfers", id = "" },
+]
+[env.testnet.vars]
+MNEMONICS = ""
+MNEMONICS_REKEY = ""
+NETWORK = "testnet"
+
+
