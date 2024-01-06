@@ -5,26 +5,44 @@ This module is an indexer module and API (OA3) that supports indexing of scanned
 
 ## ARC74 based ARC72 NFT Indexer API System
 
+```mermaid
+graph TD
+    AlgodAPI[Algod API]
+    Scanner --> AlgodAPI[Algod API]
+    Scanner --> Indexing[Indexing Serverless API]
+    Presenter --> Indexing[Indexing Serverless API]
+    User --> Presenter[Presenter API]
+
+    style AlgodAPI fill:#f9f,stroke:#000,stroke-width:2px
+    style Scanner fill:#bbf,stroke:#000,stroke-width:2px
+    style Indexing fill:#f9d,stroke:#000,stroke-width:2px
+    style Presenter fill:#bfb,stroke:#000,stroke-width:2px
+    style User fill:#fdb,stroke:#000,stroke-width:2px
+  ```
+  
+## General Flow 
 This diagram represents the flow of data and interactions in the ARC74-based ARC72 NFT indexer API system.
 
-```mermaid
+  ```mermaid
 flowchart LR
     AlgodAPI[Algod API]
     Scanner[Scanner NodeJS Module]
-    Indexer[Indexer Serverless API]
+    Indexing[Indexing Serverless API]
     Presenter[Presenter API]
     User[User]
-    Cloudflare[Cloudflare D1 SQL Instance]
+    CloudflareD1[Cloudflare D1 SQL Instance]
 
-    AlgodAPI -->|Scans rounds & events| Scanner
-    Scanner -->|Requests with ARC72 contracts batch| Indexer
-    Indexer -->|Writes JSON objects to| Cloudflare
-    Presenter -->|Calls endpoints| Indexer
-    User -->|Interacts with| Presenter
+    Scanner -->|Scans rounds & events| AlgodAPI
+    Scanner -->|Calls POST methods with batch payload| Indexing
+    Indexing -->|Writes data to| CloudflareD1
+    CloudflareD1 -->|Reads data from| Indexing
+    Presenter -->|Calls GET methods| Indexing
+    User -->|Calls ARC74 GET methods| Presenter
 
-    style AlgodAPI fill:#f9f,stroke:#333,stroke-width:2px
-    style Scanner fill:#bbf,stroke:#333,stroke-width:2px
-    style Indexer fill:#fbf,stroke:#333,stroke-width:2px
-    style Presenter fill:#bfb,stroke:#333,stroke-width:2px
-    style User fill:#fbb,stroke:#333,stroke-width:2px
-    style Cloudflare fill:#ff9,stroke:#333,stroke-width:2px
+    style AlgodAPI fill:#f9f,stroke:#000,stroke-width:2px
+    style Scanner fill:#bbf,stroke:#000,stroke-width:2px
+    style Indexing fill:#fbf,stroke:#000,stroke-width:2px
+    style Presenter fill:#bfb,stroke:#000,stroke-width:2px
+    style User fill:#fbb,stroke:#000,stroke-width:2px
+    style CloudflareD1 fill:#ff9,stroke:#000,stroke-width:2px
+  ```
