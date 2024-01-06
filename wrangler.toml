@@ -25,6 +25,9 @@ kv_namespaces = [
     { binding = "arc72-tokens", id = "" },
     { binding = "arc72-transfers", id = "" },
 ]
+d1_databases = [
+    {binding = "ARC_NFT_DB", database_name = "arc-nft-index",database_id = "4e1c28a9-90e4-41da-8b4b-6cf36e5abb29"}
+]
 [env.testnet.vars]
 MNEMONICS = ""
 MNEMONICS_REKEY = ""
