@@ -1,5 +1,9 @@
 import { OpenAPIRouter } from "@cloudflare/itty-router-openapi";
-import { AvmArcNftIndexingModule } from "./AvmArcNftIndexingModule.mjs";
+import { rootGetEndpointModule } from "./rootGetEndpointModule.mjs";
+import { AvmArcNftIndexingModuleTokens } from "./AvmArcNftIndexingModuleTokens.mjs";
+import { AvmArcNftIndexingModuleTransfers } from "./AvmArcNftIndexingModuleTransfers.mjs";
+import { Arc74ModuleTokens } from "./Arc74ModuleTokens.mjs";
+import { Arc74ModuleTransfers } from "./Arc74ModuleTransfers.mjs";
 
 
 export const router = OpenAPIRouter({
@@ -11,15 +15,15 @@ export const router = OpenAPIRouter({
     },
   },
   docs_url: '/',
-})
-
-router.get('/', AvmArcNftIndexingModule);
+});
 
 
-
-// 404 for everything else
-router.all('*', () => new Response('Not Found.', { status: 404 }))
-
+router.get('/', rootGetEndpointModule);
+router.get('/api/v1/tokens', Arc74ModuleTokens);
+router.get('/api/v1/transfers', Arc74ModuleTransfers);
+router.post('/api/v1/tokens', AvmArcNftIndexingModuleTokens);
+router.post('/api/v1/transfers', AvmArcNftIndexingModuleTransfers);
+router.all('*', () => new Response('Not Found.', { status: 404 }));
 export default {
   fetch: router.handle
 }

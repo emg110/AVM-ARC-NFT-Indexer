@@ -1,14 +1,12 @@
 name = "avm-arc-nft-indexer"
 main = "index.mjs"
-account_id = ""
+account_id = "2d83e07efa531f9e207f737409cf6ef1"
 workers_dev = true
 node_compat = true
 compatibility_date = "2023-10-11"
 usage_model = "unbound"
 kv_namespaces = [
-    { binding = "arc72-contracts", id = "" },
-    { binding = "arc72-tokens", id = "" },
-    { binding = "arc72-transfers", id = "" },
+
 ]
 [vars]
 MNEMONICS = ""
@@ -21,16 +19,15 @@ node_compat = true
 compatibility_date = "2023-10-11"
 usage_model = "unbound"
 kv_namespaces = [
-    { binding = "arc72-contracts", id = "" },
-    { binding = "arc72-tokens", id = "" },
-    { binding = "arc72-transfers", id = "" },
+    { binding = "arc72-contracts", id = "d9172c382a1c41819842e15cf9fa6d31" },
+    { binding = "arc72-tokens", id = "7d500a9a1de344f1b5a34dc78cad1c99" },
+    { binding = "arc72-transfers", id = "7e792329240849efab61bf42cac39c95" },
+
 ]
 d1_databases = [
-    {binding = "ARC_NFT_DB", database_name = "arc-nft-index",database_id = "4e1c28a9-90e4-41da-8b4b-6cf36e5abb29"}
+    { binding = "ARC_NFT_DB", database_name = "arc-nft-index", database_id = "15553855-722b-418a-a841-b596e765516d" },
 ]
 [env.testnet.vars]
 MNEMONICS = ""
 MNEMONICS_REKEY = ""
 NETWORK = "testnet"
-
-
