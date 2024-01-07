@@ -156,13 +156,13 @@ export class AvmArcNftIndexingModuleTransfers extends OpenAPIRoute {
         } else if (authorizationHeader === `Bearer ${env.INDEXER_AUTH_KEY}`) {
             console.info('Module Auth verified the request!')
         }
-        const q = data.query.q
-        console.log('Received Query: ', q)
+        const transfers = data.json()
+        console.log('Received Transfers: ', transfers)
 
         let res = {
-            tokens: [],
+            transfers: transfers,
         }
-        console.log('Returning found ARC NFT results: ', res)
+        console.log('Returning found ARC NFT transfer results: ', res)
         return res
     }
 }
