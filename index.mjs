@@ -5,7 +5,18 @@ import { AvmArcNftIndexingModuleTransfers } from "./AvmArcNftIndexingModuleTrans
 import { Arc74ModuleTokens } from "./Arc74ModuleTokens.mjs";
 import { Arc74ModuleTransfers } from "./Arc74ModuleTransfers.mjs";
 
-
+/**
+ * Router for the AVM ARC NFT Indexing Module.
+ *
+ * @module router
+ * @typedef {Object} Router
+ * @property {Object} schema - The OpenAPI schema for the router.
+ * @property {Object} schema.info - Information about the router.
+ * @property {string} schema.info.title - The title of the router.
+ * @property {string} schema.info.description - The description of the router.
+ * @property {string} schema.info.version - The version of the router.
+ * @property {string} docs_url - The URL for the router's documentation.
+ */
 export const router = OpenAPIRouter({
   schema: {
     info: {
@@ -16,8 +27,6 @@ export const router = OpenAPIRouter({
   },
   docs_url: '/',
 });
-
-
 router.get('/', rootGetEndpointModule);
 router.get('/api/v1/tokens', Arc74ModuleTokens);
 router.get('/api/v1/transfers', Arc74ModuleTransfers);

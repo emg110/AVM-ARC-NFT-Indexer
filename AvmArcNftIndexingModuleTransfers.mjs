@@ -1,6 +1,10 @@
 import { ApiException, OpenAPIRoute, Query, ValidationError, Str } from "@cloudflare/itty-router-openapi";
 import * as algosdk from "algosdk";
 
+/**
+ * Represents a class for handling transfers in the AvmArcNftIndexingModule.
+ * This module provides a REST API for indexing NFTs on the AVM based blockchains.
+ */
 export class AvmArcNftIndexingModuleTransfers extends OpenAPIRoute {
     static schema = {
         tags: ['AvmArcNftIndexingModuleTransfers'],
@@ -36,10 +40,7 @@ export class AvmArcNftIndexingModuleTransfers extends OpenAPIRoute {
                                 "num-byte-slice": 0,
                                 "num-uint": 0
                             },
-                            "local-state-schema": {
-                                "num-byte-slice": 0,
-                                "num-uint": 0
-                            }
+                            
                         },
                         "log-data": [
                             {
@@ -148,6 +149,15 @@ export class AvmArcNftIndexingModuleTransfers extends OpenAPIRoute {
         },
     }
 
+    /**
+     * Handles the incoming request for ARC NFT transfers.
+     * 
+     * @param {Request} request - The incoming request object.
+     * @param {Object} env - The environment variables.
+     * @param {Object} ctx - The context object.
+     * @param {Object} data - The data object.
+     * @returns {Object} - The response object containing the transfers.
+     */
     async handle(request, env, ctx, data) {
         const authorizationHeader = request.headers.get('Authorization');
         if (authorizationHeader !== `Bearer ${env.INDEXER_AUTH_KEY}`) {

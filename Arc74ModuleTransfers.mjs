@@ -196,9 +196,9 @@ export class Arc74ModuleTransfers extends OpenAPIRoute {
         console.log('Received Query: ', q)
 
         let res = {
-            tokens: [],
+            transfers: [],
         }
-        console.log('Returning found ARC NFT results: ', res)
+        console.log('Returning found ARC NFT transfers results: ', res)
         return res
     }
 }
