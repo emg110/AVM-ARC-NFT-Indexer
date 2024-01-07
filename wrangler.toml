@@ -1,6 +1,6 @@
 name = "avm-arc-nft-indexer"
 main = "index.mjs"
-account_id = "2d83e07efa531f9e207f737409cf6ef1"
+account_id = ""
 workers_dev = true
 node_compat = true
 compatibility_date = "2023-10-11"
