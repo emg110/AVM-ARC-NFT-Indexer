@@ -3,7 +3,7 @@ import * as algosdk from "algosdk";
 
 export class Arc74ModuleTransfers extends OpenAPIRoute {
     static schema = {
-        tags: ['Arc74ModuleTransfers'],
+        tags: ['Arc74Transfers'],
         summary: `This module provides an ARC74 REST API.`,
         parameters: {
             round: Query(Number, {

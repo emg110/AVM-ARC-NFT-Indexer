@@ -7,7 +7,7 @@ import * as algosdk from "algosdk";
  */
 export class AvmArcNftIndexingModuleTransfers extends OpenAPIRoute {
     static schema = {
-        tags: ['AvmArcNftIndexingModuleTransfers'],
+        tags: ['Arc74IndexingTransfers'],
         summary: `This module provides a REST API for indexing NFTs on the AVM based blockchains.`,
         requestBody: {
             round: 0,
