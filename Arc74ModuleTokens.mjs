@@ -184,6 +184,15 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
             }
         },
     }
+    /**
+     * Handles the incoming request for ARC NFT token indexing.
+     * 
+     * @param {Request} request - The incoming request object.
+     * @param {Object} env - The environment variables.
+     * @param {Object} ctx - The context object.
+     * @param {Object} data - The data object containing the query.
+     * @returns {Object} - The response object containing the found ARC NFT tokens.
+     */
     async handle(request, env, ctx, data) {
         const authorizationHeader = request.headers.get('Authorization');
         if (authorizationHeader !== `Bearer ${env.INDEXER_AUTH_KEY}`) {
