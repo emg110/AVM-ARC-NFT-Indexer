@@ -6,12 +6,13 @@ import {OpenAPIRoute} from "@cloudflare/itty-router-openapi";
  */
 export class rootGetEndpointModule extends OpenAPIRoute {
   static schema = {
-    tags: ['rootGetEndpointModule'],
+    tags: ['Arc74Indexing'],
     summary: `This module provides a REST API for indexing NFTs on the AVM based blockchains.`,
     responses: {
       '200': {
         schema: {
           message: "AVM ARC NFT Indexer API!🚀 Restricted zone ahead!",
+          arc74: ""
         },
       },
       '400': {
