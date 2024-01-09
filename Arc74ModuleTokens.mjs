@@ -17,27 +17,27 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
                 required: false
             }),
             contractId: Query(Number, {
-                description: 'Limit number of returned results',
+                description: 'ARC72 contract ID',
                 default: 0,
                 required: false
             }),
             tokenId: Query(Number, {
-                description: 'Limit number of returned results',
+                description: 'ARC72 token ID',
                 default: 0,
                 required: false
             }),
             owner: Query(String, {
-                description: 'Limit number of returned results',
+                description: 'ARC72 owner address',
                 default: '',
                 required: false
             }),
             "mint-min-round": Query(String, {
-                description: 'Limit number of returned results',
+                description: 'ARC72 mint min round',
                 default: 0,
                 required: false
             }),
             "mint-max-round": Query(String, {
-                description: 'Limit number of returned results',
+                description: 'ARC72 mint max round',
                 default: 0,
                 required: false
             }),
