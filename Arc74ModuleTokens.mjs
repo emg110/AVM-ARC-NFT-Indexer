@@ -8,22 +8,22 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
         parameters: {
             next: Query(String, {
                 description: 'The next page token (Results Pagination if applicable)',
-                default: '',
+                default: 0,
                 required: false
             }),
             limit: Query(Number, {
                 description: 'Limit number of returned results',
-                default: '',
+                default: 100,
                 required: false
             }),
             contractId: Query(Number, {
                 description: 'Limit number of returned results',
-                default: '',
+                default: 0,
                 required: false
             }),
             tokenId: Query(Number, {
                 description: 'Limit number of returned results',
-                default: '',
+                default: 0,
                 required: false
             }),
             owner: Query(String, {
@@ -33,12 +33,12 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
             }),
             "mint-min-round": Query(String, {
                 description: 'Limit number of returned results',
-                default: '',
+                default: 0,
                 required: false
             }),
             "mint-max-round": Query(String, {
                 description: 'Limit number of returned results',
-                default: '',
+                default: 0,
                 required: false
             }),
         },
@@ -207,7 +207,7 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
       
         const next = data.query.next
         console.log('Next: ', next)
-        const limit = data.query.limit
+        const limit = data.query.limit || 100
         console.log('Limit: ', limit)
         const contractId = data.query.contractId
         console.log('Contract ID: ', contractId)
@@ -220,13 +220,31 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
         const mintMaxRound = data.query['mint-max-round']
         console.log('mintMaxRound: ', mintMaxRound)
         console.log('Received Query: ', data.query)
+        let where = ''
+        let binds = []
+        if (contractId) {
+            where += `contract = ?`
+            binds.push(contractId)
+        }else if (tokenId) {
+            where += `token = ?`
+            binds.push(tokenId)
+        }else if (owner) {
+            where += `owner = ?`
+            binds.push(owner)
+        }else if (mintMinRound) {
+            where += `round >= ?`
+            binds.push(mintMinRound)
+        }else if (mintMaxRound) {
+            where += `round <= ?`
+            binds.push(mintMaxRound)
+        }
 
-        let statementInsert = ` SELECT * FROM arc72tokens WHERE token = ?`;
+        let statementInsert = ` SELECT * FROM arc72tokens WHERE ${where} ORDER BY round DESC ${limit? 'LIMIT ' + limit : 100} ${next? 'OFFSET ' + (next * limit) : ''}}`;
         console.log('Statement: ', statementInsert)
-        const { results } = await env.ARC_NFT_DB.prepare([statementInsert]).bind(tokenId).all();
+        const { results } = await env.ARC_NFT_DB.prepare(statementInsert).bind(binds).run();
 
         let res = {
-            results: results,
+            results:  results || [],
         }
         console.log('Returning found ARC NFT token results: ', res)
         return res
