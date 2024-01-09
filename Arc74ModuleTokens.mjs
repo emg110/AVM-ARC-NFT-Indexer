@@ -123,7 +123,7 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
         let statementInsert = ` SELECT * FROM arc72tokens ${where} ORDER BY round DESC ${limit ? 'LIMIT ' + limit : 100} ${next ? 'OFFSET ' + (next * limit) : ''}`;
         console.log('Statement: ', statementInsert)
         console.log('Binds: ', binds.join(','))
-        const { results } = await env.ARC_NFT_DB.prepare(statementInsert).bind(binds.join(',')).run();
+        const { results } = binds && binds.length > 0 ? await env.ARC_NFT_DB.prepare(statementInsert).bind(binds.join(',')).run(): await env.ARC_NFT_DB.prepare(statementInsert).run();
 
         let res = {
             results: results,
