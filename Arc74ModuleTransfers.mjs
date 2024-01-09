@@ -6,37 +6,40 @@ export class Arc74ModuleTransfers extends OpenAPIRoute {
         tags: ['Arc74Transfers'],
         summary: `This module provides an ARC74 REST API.`,
         parameters: {
-            round: Query(Number, {
-                description: 'The round to include the results for',
-                default: ''
-            }),
             next: Query(String, {
                 description: 'The next page token (Results Pagination if applicable)',
-                default: ''
+                default: '',
+                required: false
             }),
             limit: Query(Number, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
             contractId: Query(Number, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
             tokenId: Query(Number, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
             owner: Query(String, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
             "mint-min-round": Query(String, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
             "mint-max-round": Query(String, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
         },
         responses: {

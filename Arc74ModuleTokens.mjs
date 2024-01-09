@@ -8,31 +8,38 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
         parameters: {
             next: Query(String, {
                 description: 'The next page token (Results Pagination if applicable)',
-                default: ''
+                default: '',
+                required: false
             }),
             limit: Query(Number, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
             contractId: Query(Number, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
             tokenId: Query(Number, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
             owner: Query(String, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
             "mint-min-round": Query(String, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
             "mint-max-round": Query(String, {
                 description: 'Limit number of returned results',
-                default: ''
+                default: '',
+                required: false
             }),
         },
         responses: {
@@ -190,21 +197,28 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
      * @returns {Object} - The response object containing the found ARC NFT tokens.
      */
     async handle(request, env, ctx, data) {
-        const authorizationHeader = request.headers.get('Authorization');
-        if (authorizationHeader !== `Bearer ${env.INDEXER_AUTH_KEY}`) {
-            console.error('Indexing module: Unauthorized access!')
-            return new Response('Unauthorized Access!', { status: 401 })
-        } else if (authorizationHeader === `Bearer ${env.INDEXER_AUTH_KEY}`) {
-            console.info('Module Auth verified the request!')
-        }
+        // const authorizationHeader = request.headers.get('Authorization');
+        // if (authorizationHeader !== `Bearer ${env.INDEXER_AUTH_KEY}`) {
+        //     console.error('Indexing module: Unauthorized access!')
+        //     return new Response('Unauthorized Access!', { status: 401 })
+        // } else if (authorizationHeader === `Bearer ${env.INDEXER_AUTH_KEY}`) {
+        //     console.info('Module Auth verified the request!')
+        // }
       
         const next = data.query.next
+        console.log('Next: ', next)
         const limit = data.query.limit
+        console.log('Limit: ', limit)
         const contractId = data.query.contractId
+        console.log('Contract ID: ', contractId)
         const tokenId = data.query.tokenId
+        console.log('Token ID: ', tokenId)
         const owner = data.query.owner
+        console.log('Owner: ', owner)
         const mintMinRound = data.query['mint-min-round']
+        console.log('mintMinRound: ', mintMinRound)
         const mintMaxRound = data.query['mint-max-round']
+        console.log('mintMaxRound: ', mintMaxRound)
         console.log('Received Query: ', data.query)
 
         let statementInsert = ` SELECT * FROM arc72tokens WHERE token = ?`;
