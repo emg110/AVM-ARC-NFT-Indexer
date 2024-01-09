@@ -31,3 +31,4 @@ d1_databases = [
 MNEMONICS = ""
 MNEMONICS_REKEY = ""
 NETWORK = "testnet"
+INDEXER_AUTH_KEY = ""

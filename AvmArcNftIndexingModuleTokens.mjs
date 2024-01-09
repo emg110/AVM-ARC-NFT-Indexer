@@ -48,13 +48,13 @@ export class AvmArcNftIndexingModuleTokens extends OpenAPIRoute {
      * @returns {Object} - The response object containing the found ARC NFT token results.
      */
     async handle(request, env, ctx, data) {
-        //const authorizationHeader = request.headers.get('Authorization');
-        // if (authorizationHeader !== `Bearer ${env.INDEXER_AUTH_KEY}`) {
-        //     console.error('Indexing module: Unauthorized access!')
-        //     return new Response('Unauthorized Access!', { status: 401 })
-        // } else if (authorizationHeader === `Bearer ${env.INDEXER_AUTH_KEY}`) {
-        //     console.info('Module Auth verified the request!')
-        // }
+        const authorizationHeader = request.headers.get('Authorization');
+        if (authorizationHeader !== `Bearer ${env.INDEXER_AUTH_KEY}`) {
+            console.error('Indexing module: Unauthorized access!')
+            return new Response('Unauthorized Access!', { status: 401 })
+        } else if (authorizationHeader === `Bearer ${env.INDEXER_AUTH_KEY}`) {
+            console.info('Module Auth verified the request!')
+        }
         const tokens = data.json()
         console.log('Received Tokens: ', tokens)
 
