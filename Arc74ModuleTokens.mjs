@@ -220,26 +220,26 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
         const mintMaxRound = data.query['mint-max-round']
         console.log('mintMaxRound: ', mintMaxRound)
         console.log('Received Query: ', data.query)
-        let where = ''
+        let where = 'WHERE id >= 0 AND'
         let binds = []
         if (contractId) {
-            where += `contract = ?`
+            where += `contract = ? AND `
             binds.push(contractId)
         }else if (tokenId) {
-            where += `token = ?`
+            where += ` token = ? AND `
             binds.push(tokenId)
         }else if (owner) {
-            where += `owner = ?`
+            where += ` owner = ? AND `
             binds.push(owner)
         }else if (mintMinRound) {
-            where += `round >= ?`
+            where += ` round >= ? AND `
             binds.push(mintMinRound)
         }else if (mintMaxRound) {
-            where += `round <= ?`
+            where += ` round <= ? AND `
             binds.push(mintMaxRound)
         }
 
-        let statementInsert = ` SELECT * FROM arc72tokens WHERE ${where} ORDER BY round DESC ${limit? 'LIMIT ' + limit : 100} ${next? 'OFFSET ' + (next * limit) : ''}}`;
+        let statementInsert = ` SELECT * FROM arc72tokens ${where !== 'WHERE '? where : ''} ORDER BY round DESC ${limit? 'LIMIT ' + limit : 100} ${next? 'OFFSET ' + (next * limit) : ''}}`;
         console.log('Statement: ', statementInsert)
         const { results } = await env.ARC_NFT_DB.prepare(statementInsert).bind(binds).run();
 
