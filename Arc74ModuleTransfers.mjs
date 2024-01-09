@@ -45,8 +45,7 @@ export class Arc74ModuleTransfers extends OpenAPIRoute {
         responses: {
             '200': {
                 schema: {
-
-                    tokens: [{
+                    transfers: [{
                         owner: "",
                         contract: 0,
                         token: 0,
