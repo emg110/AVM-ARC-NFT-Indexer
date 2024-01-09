@@ -223,19 +223,19 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
         let where = 'WHERE id >= 0 AND'
         let binds = []
         if (contractId) {
-            where += `contract = ? AND `
+            where += ` AND contract = ? `
             binds.push(contractId)
         }else if (tokenId) {
-            where += ` token = ? AND `
+            where += ` AND token = ? `
             binds.push(tokenId)
         }else if (owner) {
-            where += ` owner = ? AND `
+            where += ` AND owner = ? `
             binds.push(owner)
         }else if (mintMinRound) {
-            where += ` round >= ? AND `
+            where += ` AND round >= ? `
             binds.push(mintMinRound)
         }else if (mintMaxRound) {
-            where += ` round <= ? AND `
+            where += ` AND round <= ? `
             binds.push(mintMaxRound)
         }
 
