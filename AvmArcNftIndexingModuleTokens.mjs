@@ -51,11 +51,13 @@ export class AvmArcNftIndexingModuleTokens extends OpenAPIRoute {
         const authorizationHeader = request.headers.get('Authorization');
         if (authorizationHeader !== `Bearer ${env.INDEXER_AUTH_KEY}`) {
             console.error('Indexing module: Unauthorized access!')
+            console.error('Bearer + ',authorizationHeader)
             return new Response('Unauthorized Access!', { status: 401 })
         } else if (authorizationHeader === `Bearer ${env.INDEXER_AUTH_KEY}`) {
             console.info('Module Auth verified the request!')
         }
-        const tokens = data.json()
+        console.log(data)
+        const {tokens} = data
         console.log('Received Tokens: ', tokens)
 
         let res = {
