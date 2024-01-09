@@ -6,10 +6,6 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
         tags: ['Arc74Tokens'],
         summary: `This module provides an ARC74 REST API.`,
         parameters: {
-            round: Query(Number, {
-                description: 'The round to include the results for',
-                default: ''
-            }),
             next: Query(String, {
                 description: 'The next page token (Results Pagination if applicable)',
                 default: ''
@@ -201,13 +197,24 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
         } else if (authorizationHeader === `Bearer ${env.INDEXER_AUTH_KEY}`) {
             console.info('Module Auth verified the request!')
         }
-        const q = data.query.q
-        console.log('Received Query: ', q)
+      
+        const next = data.query.next
+        const limit = data.query.limit
+        const contractId = data.query.contractId
+        const tokenId = data.query.tokenId
+        const owner = data.query.owner
+        const mintMinRound = data.query['mint-min-round']
+        const mintMaxRound = data.query['mint-max-round']
+        console.log('Received Query: ', data.query)
+
+        let statementInsert = ` SELECT * FROM arc72tokens WHERE token = ?`;
+        console.log('Statement: ', statementInsert)
+        const { results } = await env.ARC_NFT_DB.prepare([statementInsert]).bind(tokenId).all();
 
         let res = {
-            tokens: [],
+            results: results,
         }
-        console.log('Returning found ARC NFT results: ', res)
+        console.log('Returning found ARC NFT token results: ', res)
         return res
     }
 }
