@@ -1,5 +1,6 @@
 import { ApiException, OpenAPIRoute, Query, ValidationError, Str } from "@cloudflare/itty-router-openapi";
 import * as algosdk from "algosdk";
+import moment from "moment-timezone";
 
 /**
  * Represents a class for indexing NFTs on the AVM based blockchains.
@@ -51,17 +52,39 @@ export class AvmArcNftIndexingModuleTokens extends OpenAPIRoute {
         const authorizationHeader = request.headers.get('Authorization');
         if (authorizationHeader !== `Bearer ${env.INDEXER_AUTH_KEY}`) {
             console.error('Indexing module: Unauthorized access!')
-            console.error('Bearer + ',authorizationHeader)
+            console.error('Bearer + ', authorizationHeader)
             return new Response('Unauthorized Access!', { status: 401 })
         } else if (authorizationHeader === `Bearer ${env.INDEXER_AUTH_KEY}`) {
             console.info('Module Auth verified the request!')
         }
         console.log(data)
-        const {tokens} = data
-        console.log('Received Tokens: ', tokens)
+        const token = data.body
+        console.log('Received ARC72 Token: ', token)
+        const now = moment();
+        const tenSecondsAgo = now.subtract(10, 'seconds');
+        //const statement = tokens.map(token => `insert into arc72-tokens (id, contract-id, owner, round, timestamp) values (${token.tokenId}, ${token.contractId}, ${token.owner}, ${token.round}, ${tenSecondsAgo})`).join(';')
+        console.log('Received ARC72 Timestamp: ', tenSecondsAgo.unix())
+        const statementTable = `
+        CREATE TABLE IF NOT EXISTS arc72tokens (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            token INTEGER,
+            contract INTEGER,
+            owner TEXT,
+            round INTEGER,
+            timestamp INTEGER
+        );
+       `
+        let statementIndexContract = ` CREATE INDEX IF NOT EXISTS idx_token_contract ON arc72tokens (contract);`;
+        let statementIndexToken = ` CREATE INDEX IF NOT EXISTS idx_token_token ON arc72tokens (token);`;
+        let statementIndexRound = ` CREATE INDEX IF NOT EXISTS idx_token_round ON arc72tokens (round);`;
+        let statementIndexTimestamp = ` CREATE INDEX IF NOT EXISTS idx_token_timestamp ON arc72tokens (timestamp);`;
+        let statementInsert = ` INSERT INTO arc72tokens (token,contract,owner,round,timestamp) VALUES (${token.tokenId},${token.contractId},"${token.owner}",${token.round},${tenSecondsAgo.unix()});`;
+        console.log('Statement: ', statementInsert)
+        const { results } = await env.ARC_NFT_DB.prepare([statementTable, statementIndexContract,statementIndexToken,statementIndexRound,statementIndexTimestamp, statementInsert]).all();
 
         let res = {
-            tokens: tokens,
+            results: results,
+            token: token,
         }
         console.log('Returning found ARC NFT token results: ', res)
         return res
