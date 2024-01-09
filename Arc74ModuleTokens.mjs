@@ -220,7 +220,7 @@ export class Arc74ModuleTokens extends OpenAPIRoute {
         const mintMaxRound = data.query['mint-max-round']
         console.log('mintMaxRound: ', mintMaxRound)
         console.log('Received Query: ', data.query)
-        let where = 'WHERE id >= 0 AND'
+        let where = 'WHERE id >= 0 '
         let binds = []
         if (contractId) {
             where += ` AND contract = ? `
